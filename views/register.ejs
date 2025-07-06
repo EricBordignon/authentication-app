@@ -1,0 +1,24 @@
+<%- include("partials/header.ejs") %>
+
+<main>
+  <form action="/new-user" method="post" id="register-form">
+    <% if (validated) { %>
+      <% if (validated === "emailExists") { %>
+          <p>Email already exists</p>
+        
+        <% } else if (validated === "passwordsNotMatch") { %>
+          <p>Passwords don't match</p>
+
+        <% } else { %>
+          <p>Enter your informations</p>
+      <% } %>
+    <% } %>
+    <label for="email">E-mail:</label>
+    <input type="email" name="email" class="input-box">
+    <label for="password">Password:</label>
+    <input type="password" name="password" class="input-box">
+    <label for="confirmation">Confirm password:</label>
+    <input type="password" name="confirmation" class="input-box">
+    <button type="submit">Submit</button>
+  </form>
+</main>

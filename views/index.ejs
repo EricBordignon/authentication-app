@@ -1,5 +1,11 @@
 <%- include("partials/header.ejs") %>
 
 <main>
-  
+  <% if (status === "registered") { %>
+    <h1>You successfullyregistered with the name <%= name %></h1>
+  <% } else if (status === "signedIn") { %>
+    <h1>Welcome back, <%= name %></h1>
+  <% } else { %>
+    <h1>This website was created to practice how to handle authentication (with no database yet). So no content will be available here 😊</h1>
+  <% } %>
 </main>

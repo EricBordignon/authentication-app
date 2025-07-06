@@ -20,13 +20,16 @@ function register (req, res, next) {
   passwordsMatch = false;
   emailExist = false;
 
+  const newName = req.body.name;
   const newPassword = req.body.password;
   const newEmail = req.body.email;
 
+  // Check if passwords match
   if (newPassword === req.body.confirmation) {
     passwordsMatch = true;
   }
 
+  // Check if email already exists
   users.forEach((item) => {
     if (item.email === newEmail) {
       emailExist = true;
@@ -35,22 +38,30 @@ function register (req, res, next) {
 
   if (!emailExist && passwordsMatch) {
     const newUser = {
+      name: newName,
       email: newEmail,
       password: newPassword
     };
 
     users.push(newUser);
-    console.log(users)
+    req.newUser = newUser;
   };
 
   next();
 };
 
+// middleware function for sign in
+function signIn (req, res, next) {
+  
+  
+  next();
+}
+
 
 
 // Navigation
 app.get("/", (req, res) => {
-  res.render("index.ejs");
+  res.render("index.ejs", { status: "default", name: "default"});
 });
 
 app.get("/register", (req, res) => {
@@ -69,7 +80,7 @@ app.post("/new-user", register, (req, res) => {
   } else if (!passwordsMatch) {
     res.render("register.ejs", { validated : "passwordsNotMatch" });
   } else {
-    res.redirect("/");
+    res.render("index.ejs", {status : "registered", name: req.newUser.name});
   };
 
   
